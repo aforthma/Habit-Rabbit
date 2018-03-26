@@ -3,7 +3,9 @@ package comjianzhaojohnhabit_rabbit.httpsgithub.habit_rabbit;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -46,7 +48,9 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.OutputStream;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -76,9 +80,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
-
-//        boolean loggingInExistingAccount = true; //make a function to determine this next time
-
+        //https://stackoverflow.com/questions/27422007/update-android-widget-at-midnight
+        /*
+        LocalTime localTime = LocalTime.now();
+        long current = System.currentTimeMillis();
+        long offset = 24*60*60*1000 - localTime.getHour()*60*60*1000 - localTime.getMinute()*60*1000;
+        long midnightInMillis = current + offset;
+        PendingIntent pendingAlarmIntent = PendingIntent.getBroadcast(getApplicationContext(),0,new Intent(getApplicationContext(),CheckHabitsAlarm.class),0);
+        AlarmManager checkHabitsAlarm = (AlarmManager) getSystemService(ALARM_SERVICE);
+        //checkHabitsAlarm.setInexactRepeating(AlarmManager.RTC_WAKEUP,midnightInMillis,AlarmManager.INTERVAL_DAY,pendingAlarmIntent);
+        checkHabitsAlarm.setInexactRepeating(AlarmManager.RTC_WAKEUP,current+5000,AlarmManager.INTERVAL_DAY,pendingAlarmIntent);
+        */
 
         try {
             File autologin = getApplicationContext().getFileStreamPath("autionloginfile");
